@@ -67,6 +67,12 @@ class AuthController extends Controller
     }
 
     public function logout(){
+        if (!auth('api')->check()) {
+            return response()->json([
+                'error' => 'User not authenticated'
+            ], 401);
+        }
+
         $user = auth('api')->logout();
 
         return response()->json([
