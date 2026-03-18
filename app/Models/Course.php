@@ -11,15 +11,28 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
-        'date',
-        'nich'
+        'price',
+        'teacher_id'
     ];
 
-    public function teachers(){
-        return $this->belongsTo(Teacher::class);
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
     }
 
-    public function students(){
-        return $this->HasMany(Student::class);
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
     }
+
+    public function interests()
+    {
+        return $this->belongsToMany(Interest::class);
+    }
+
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
 }
