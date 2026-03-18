@@ -11,4 +11,4 @@ Route::middleware('auth:api')->post('/reset-password', [AuthController::class, '
 Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']);
 
 
-Route::apiResource('/teacher', CourseController::class);
+Route::middleware(['auth:api', 'teacher'])->apiResource('/teacher', CourseController::class);

@@ -78,6 +78,23 @@ class CourseController extends Controller
         ], 200);
     }
 
+    public function destroy($id)
+    {
+        $course = Course::find($id);
 
+        if (!$course) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Course not found'
+            ], 404);
+        }
+
+        $course->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Course deleted successfully'
+        ], 200);
+    }
     
 }
