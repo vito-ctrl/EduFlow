@@ -11,16 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('interests', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('title');
-            $table->text('description');
-            $table->decimal('price', 8, 2);
-            
-            $table->foreignId('teacher_id')->constrained('users')->cascadeOnDelete();
-            
-            $table->timestamps();
+            $table->string('name');
         });
     }
 
@@ -29,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        //
     }
 };

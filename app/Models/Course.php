@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Teacher;
+use App\Models\student;
 
 class Course extends Model
 {
@@ -11,5 +13,13 @@ class Course extends Model
         'description',
         'date',
         'nich'
-    ]
+    ];
+
+    public function teachers(){
+        return $this->belongsTo(Teacher::class);
+    }
+
+    public function students(){
+        return $this->HasMany(Student::class);
+    }
 }
