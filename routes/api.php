@@ -11,4 +11,12 @@ Route::middleware('auth:api')->post('/reset-password', [AuthController::class, '
 Route::middleware('auth:api')->post('/logout', [AuthController::class, 'logout']);
 
 
-Route::middleware(['auth:api', 'teacher'])->apiResource('/teacher', CourseController::class);
+Route::middleware(['auth:api', 'teacher'])->group(function() {
+    Route::post('/teacher', [CourseController::class, 'store']);
+    Route::put('/teacher/{id}', [CourseController::class, 'update']);
+    Route::delete('/teacher', [CourseController::class, 'destroy']);
+});
+
+Route::middleware(['auth:api', 'student'])->group(function() {
+    Route::get('/student', [CourseController::class, 'index']);
+});

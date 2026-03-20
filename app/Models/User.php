@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Interest;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -71,7 +72,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function interests()
     {
-        return $this->belongsToMany(Interest::class);
+        return $this->belongsToMany(Interest::class, 'user_interests');
     }
 
     public function favorites()

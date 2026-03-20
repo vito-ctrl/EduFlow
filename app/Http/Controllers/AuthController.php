@@ -10,11 +10,15 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function register(Request $request){
+
         $request->validate([
             'name' => 'required|string|max:250',
             'role' => 'required|string',
             'email' => 'required|string|email|max:250|unique:users',
             'password' => 'required|min:6',
+
+            'interests' => 'required_if:role,student|array',
+            'interests.*' => 'exists:interests,id'
         ]);
 
         $user = User::create([
@@ -23,6 +27,10 @@ class AuthController extends Controller
             'role' => $request->role,
             'password' => Hash::make($request->password)
         ]);
+
+        if ($request->role === 'student') {
+            $user->interests()->attach($request->interests);
+        }
 
         return response()->json([
             'message' => 'user register succefully',
