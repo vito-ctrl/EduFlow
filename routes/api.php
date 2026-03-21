@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentFavorites;
+
 
 // authentification
 Route::post('/register', [AuthController::class, 'register']);
@@ -22,4 +24,7 @@ Route::middleware(['auth:api', 'student'])->group(function() {
     Route::get('/student', [CourseController::class, 'index']);
     Route::get('/student/courses/available', [StudentController::class, 'AvailableCourses']);
     Route::get('/student/courses/match', [StudentController::class, 'MatchCourses']);
+
+    Route::post('/student/courses/favorites/{courseId}', [StudentFavorites::class, 'store']);
+    Route::get('/student/courses/favorites/', [StudentFavorites::class, 'index']);
 });

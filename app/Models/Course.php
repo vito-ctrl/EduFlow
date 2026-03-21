@@ -16,6 +16,10 @@ class Course extends Model
         'teacher_id'
     ];
 
+    protected $hidden = [
+        'pivot',
+    ];
+
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
@@ -36,4 +40,7 @@ class Course extends Model
         return $this->hasMany(Group::class);
     }
 
+    public function favorites () {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }
