@@ -102,18 +102,4 @@ class CourseController extends Controller
             'message' => 'Course deleted successfully'
         ], 200);
     }
-    
-    public function AvailableCourses () {
-        $courses = Course::with('interests')
-                    ->where('available', 1)
-                    ->get()
-                    ->map(function ($course) {
-                        $course->interests = $course->interests->pluck('name');
-                        return $course;
-                    });
-
-        return response()->json([
-            "available_courses " => $courses
-        ], 200); 
-    } 
 }

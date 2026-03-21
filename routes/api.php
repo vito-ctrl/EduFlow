@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StudentController;
 
 // authentification
 Route::post('/register', [AuthController::class, 'register']);
@@ -19,5 +20,6 @@ Route::middleware(['auth:api', 'teacher'])->group(function() {
 
 Route::middleware(['auth:api', 'student'])->group(function() {
     Route::get('/student', [CourseController::class, 'index']);
-    Route::get('/student/courses/available', [CourseController::class, 'AvailableCourses']);
+    Route::get('/student/courses/available', [StudentController::class, 'AvailableCourses']);
+    Route::get('/student/courses/match', [StudentController::class, 'MatchCourses']);
 });
