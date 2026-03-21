@@ -15,19 +15,25 @@ class CourseController extends Controller
     }
 
     public function store(Request $request){
+        
         $request->validate([
             'title' => 'required|string|max:250',
             'description' => 'required|string',
             'price' => 'required',
-            'teacher_id' => 'required'
+            'available' => 'required|boolean',
+            'interests' => 'required|array',
+            'interests.*' => 'exists:interests,id'
         ]);
 
         $course = Course::create([
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-            'teacher_id' => $request->teacher_id
+            'available' => $request->available,
+            'teacher_id' => auth()->user()->id,
         ]);
+
+        $course->interestS()->attach($request->interests);
 
         return response()->json([
             "message" => 'course created succefully',
@@ -97,4 +103,17 @@ class CourseController extends Controller
         ], 200);
     }
     
+    public function AvailableCourses () {
+        $courses = Course::with('interests')
+                    ->where('available', 1)
+                    ->get()
+                    ->map(function ($course) {
+                        $course->interests = $course->interests->pluck('name');
+                        return $course;
+                    });
+
+        return response()->json([
+            "available_courses " => $courses
+        ], 200); 
+    } 
 }

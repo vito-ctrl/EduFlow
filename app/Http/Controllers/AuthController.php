@@ -31,7 +31,7 @@ class AuthController extends Controller
         if ($request->role === 'student') {
             $user->interests()->attach($request->interests);
         }
-
+        
         return response()->json([
             'message' => 'user register succefully',
             'user' => $user,

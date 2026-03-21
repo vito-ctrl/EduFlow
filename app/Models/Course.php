@@ -12,6 +12,7 @@ class Course extends Model
         'title',
         'description',
         'price',
+        'available',
         'teacher_id'
     ];
 
@@ -27,7 +28,7 @@ class Course extends Model
 
     public function interests()
     {
-        return $this->belongsToMany(Interest::class);
+        return $this->belongsToMany(Interest::class, 'course_interest', 'course_id', 'interest_id');
     }
 
     public function groups()
