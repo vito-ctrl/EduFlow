@@ -29,11 +29,11 @@ Route::middleware(['auth:api', 'student'])->group(function() {
     Route::post('/student/courses/favorites/{courseId}', [StudentFavorites::class, 'store']);
     Route::get('/student/courses/favorites/', [StudentFavorites::class, 'index']);
 
-    Route::post('/process-payment', [PaymentController::class, 'processPayment']);
-    Route::get('/payment/success', function () {
-        return 'Payment Successful!';
-    })->name('payment.success');
-    Route::get('/payment/failure', function () {
-        return 'Payment Failed!';
-    })->name('payment.failure');
+    Route::post('student/courses/payment', [PaymentController::class, 'processPayment']);
+    // Route::get('/payment/success', function () {
+    //     return 'Payment Successful!';
+    // })->name('payment.success');
+    // Route::get('/payment/failure', function () {
+    //     return 'Payment Failed!';
+    // })->name('payment.failure');
 });
