@@ -22,6 +22,7 @@ Route::middleware(['auth:api', 'teacher'])->group(function() {
     Route::put('/teacher/{id}', [CourseController::class, 'update']);
     Route::delete('/teacher', [CourseController::class, 'destroy']);
     Route::get('/teacher/students', [TeacherController::class, 'getMyStudents']);
+    Route::get('/teacher/stats', [TeacherController::class, 'stats']);
 });
 
 Route::middleware(['auth:api', 'student'])->group(function() {
