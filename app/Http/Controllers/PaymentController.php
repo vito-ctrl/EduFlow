@@ -87,4 +87,29 @@ class PaymentController extends Controller
             ], 500);
         }
     }
+
+    public function withdraw($courseId)
+{
+    $user = auth()->user();
+
+    $enrollment = Enrollment::where('user_id', $user->id)
+        ->where('course_id', $courseId)
+        ->whereIn('status', ['paid', 'pending'])
+        ->first();
+
+    if (!$enrollment) {
+        return response()->json([
+            "message" => "Enrollment not found"
+        ], 404);
+    }
+
+    $enrollment->update([
+        'status' => 'cancelled'
+    ]);
+
+    return response()->json([
+        "message" => "Successfully withdrawn from course"
+    ]);
+}
+
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentFavorites;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TeacherController;
+
 
 
 // authentification
@@ -19,6 +21,7 @@ Route::middleware(['auth:api', 'teacher'])->group(function() {
     Route::post('/teacher', [CourseController::class, 'store']);
     Route::put('/teacher/{id}', [CourseController::class, 'update']);
     Route::delete('/teacher', [CourseController::class, 'destroy']);
+    Route::get('/teacher/students', [TeacherController::class, 'getMyStudents']);
 });
 
 Route::middleware(['auth:api', 'student'])->group(function() {
@@ -30,10 +33,5 @@ Route::middleware(['auth:api', 'student'])->group(function() {
     Route::get('/student/courses/favorites/', [StudentFavorites::class, 'index']);
 
     Route::post('student/courses/payment', [PaymentController::class, 'processPayment']);
-    // Route::get('/payment/success', function () {
-    //     return 'Payment Successful!';
-    // })->name('payment.success');
-    // Route::get('/payment/failure', function () {
-    //     return 'Payment Failed!';
-    // })->name('payment.failure');
+    Route::delete('student/courses/{courseId}/withdraw', [PaymentController::class, 'withdraw']);
 });
